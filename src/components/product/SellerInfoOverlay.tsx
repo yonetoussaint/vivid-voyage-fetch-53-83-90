@@ -24,7 +24,7 @@ const SellerInfoOverlay: React.FC<SellerInfoOverlayProps> = ({
   if (!seller || focusMode || isPlaying) return null;
 
   return (
-    <div className="absolute bottom-16 left-3 z-30 transition-opacity duration-300">
+    <div className="absolute bottom-3 left-3 z-30 transition-opacity duration-300">
       <button
         onClick={onSellerClick}
         className="bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1.5 hover:bg-black/70 transition-colors"

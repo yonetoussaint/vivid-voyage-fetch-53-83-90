@@ -1,7 +1,6 @@
 import React from 'react';
 import { Video } from '@/hooks/useVideos';
 import { ReelsActionButtons } from './ReelsActionButtons';
-import { ReelsVideoInfo } from './ReelsVideoInfo';
 import PriceInfo from '@/components/product/PriceInfo';
 import SellerInfoOverlay from '@/components/product/SellerInfoOverlay';
 import ProductDetails from '@/components/product/ProductDetails';
@@ -78,16 +77,8 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
           onViewProduct={() => {}}
         />
 
-        <ReelsVideoInfo video={video} />
-
-        {/* Price Info - Bottom Left (Above Seller) */}
-        <PriceInfo
-          product={product}
-          focusMode={false}
-          isPlaying={isPlaying}
-        />
-
-        {/* Seller Info - Bottom Left (Below Price) */}
+        
+        {/* Seller Info - Bottom Left (Same line as Product Details) */}
         <SellerInfoOverlay 
           seller={seller}
           onSellerClick={onSellerClick}
