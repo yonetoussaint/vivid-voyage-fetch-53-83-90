@@ -5,6 +5,7 @@ import { ReelsVideoInfo } from './ReelsVideoInfo';
 import PriceInfo from '@/components/product/PriceInfo';
 import SellerInfoOverlay from '@/components/product/SellerInfoOverlay';
 import ProductDetails from '@/components/product/ProductDetails';
+import { useSellerByUserId } from '@/hooks/useSellerByUserId';
 
 interface ReelsVideoPlayerProps {
   video: Video;
@@ -15,13 +16,6 @@ interface ReelsVideoPlayerProps {
   onVideoClick: (index: number, event?: React.MouseEvent) => void;
   formatViews: (views: number) => string;
   isModalMode?: boolean;
-  seller?: {
-    id: string;
-    name: string;
-    image_url?: string;
-    verified: boolean;
-    followers_count: number;
-  };
   product?: {
     id: string;
     name: string;
@@ -41,11 +35,12 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
   onVideoClick,
   formatViews,
   isModalMode = false,
-  seller,
   product,
   onSellerClick,
   onProductDetailsClick,
 }) => {
+  // Fetch real seller data from database
+  const { data: seller } = useSellerByUserId(video.user_id || '');
   return (
     <div 
       id={`reel-${index}`}

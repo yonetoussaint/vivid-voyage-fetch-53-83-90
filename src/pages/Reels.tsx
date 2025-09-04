@@ -65,13 +65,6 @@ export default function Reels() {
             onVideoClick={handleVideoClick}
             formatViews={formatViews}
             isModalMode={isModalMode}
-            seller={{
-              id: video.user_id || 'unknown',
-              name: video.username,
-              image_url: video.avatar_url,
-              verified: false,
-              followers_count: 0
-            }}
             product={{
               id: video.id,
               name: video.title,
