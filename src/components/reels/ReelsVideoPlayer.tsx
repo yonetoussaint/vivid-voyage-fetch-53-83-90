@@ -40,6 +40,7 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
 }) => {
   // Fetch real seller data from database
   const { data: seller } = useSellerByUserId(video.user_id || '');
+
   return (
     <div 
       id={`reel-${index}`}
@@ -59,7 +60,6 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
         />
       </div>
 
-
       <div className="absolute inset-0 pointer-events-none flex flex-col justify-end">
         <div className="absolute bottom-0 left-0 right-0 h-3/5 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
@@ -76,18 +76,6 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
           onBookmark={() => {}}
           onViewProduct={() => {}}
         />
-
-        
-        {/* Seller Info - Bottom Left (Same line as Product Details) */}
-        <SellerInfoOverlay 
-          seller={seller}
-          onSellerClick={onSellerClick}
-          focusMode={false}
-          isPlaying={isPlaying}
-        />
-
-        {/* Product Details - Bottom Right */}
-        <ProductDetails onProductDetailsClick={onProductDetailsClick} />
       </div>
     </div>
   );

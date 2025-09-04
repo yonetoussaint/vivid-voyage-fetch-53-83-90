@@ -243,5 +243,6 @@ export const useReelsLogic = () => {
     containerRef,
     handleVideoClick,
     formatViews,
+    currentVideoIndex: activeReelIndex,
   };
 };

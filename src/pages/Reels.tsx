@@ -3,7 +3,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ReelsSkeleton from "@/components/skeletons/ReelsSkeleton";
 import { ReelsHeader } from "@/components/reels/ReelsHeader";
 import { ReelsVideoPlayer } from "@/components/reels/ReelsVideoPlayer";
+import { StickyReelsBottomBar } from "@/components/reels/StickyReelsBottomBar";
 import { useReelsLogic } from "@/components/reels/hooks/useReelsLogic";
+import { useSellerByUserId } from '@/hooks/useSellerByUserId';
 
 export default function Reels() {
   const location = useLocation();
@@ -21,7 +23,12 @@ export default function Reels() {
     containerRef,
     handleVideoClick,
     formatViews,
+    currentVideoIndex,
   } = useReelsLogic();
+
+  // Get current video and its seller data
+  const currentVideo = videos?.[currentVideoIndex];
+  const { data: currentSeller } = useSellerByUserId(currentVideo?.user_id || '');
 
   const handleClose = () => {
     // Navigate to home page when closing modal
@@ -65,17 +72,24 @@ export default function Reels() {
             onVideoClick={handleVideoClick}
             formatViews={formatViews}
             isModalMode={isModalMode}
-            product={{
-              id: video.id,
-              name: video.title,
-              price: 29.99,
-              discount_price: 19.99
-            }}
-            onSellerClick={() => navigate(`/seller/${video.user_id}`)}
-            onProductDetailsClick={() => console.log('Product details clicked for:', video.id)}
           />
         ))}
       </div>
+
+      {/* Sticky Bottom Bar */}
+      <StickyReelsBottomBar
+        currentVideo={currentVideo}
+        seller={currentSeller}
+        product={currentVideo ? {
+          id: currentVideo.id,
+          name: currentVideo.title,
+          price: 29.99,
+          discount_price: 19.99
+        } : undefined}
+        onSellerClick={() => currentVideo && navigate(`/seller/${currentVideo.user_id}`)}
+        onProductDetailsClick={() => currentVideo && console.log('Product details clicked for:', currentVideo.id)}
+        isPlaying={currentVideo ? playingStates[currentVideoIndex] : false}
+      />
     </div>
   );
 }
