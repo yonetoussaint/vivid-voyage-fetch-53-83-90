@@ -65,6 +65,21 @@ export default function Reels() {
             onVideoClick={handleVideoClick}
             formatViews={formatViews}
             isModalMode={isModalMode}
+            seller={{
+              id: video.user_id || 'unknown',
+              name: video.username,
+              image_url: video.avatar_url,
+              verified: false,
+              followers_count: 0
+            }}
+            product={{
+              id: video.id,
+              name: video.title,
+              price: 29.99,
+              discount_price: 19.99
+            }}
+            onSellerClick={() => navigate(`/seller/${video.user_id}`)}
+            onProductDetailsClick={() => console.log('Product details clicked for:', video.id)}
           />
         ))}
       </div>

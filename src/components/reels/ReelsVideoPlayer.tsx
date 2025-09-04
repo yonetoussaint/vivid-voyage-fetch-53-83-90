@@ -1,8 +1,10 @@
 import React from 'react';
 import { Video } from '@/hooks/useVideos';
-import { ReelsPlayPauseOverlay } from './ReelsPlayPauseOverlay';
 import { ReelsActionButtons } from './ReelsActionButtons';
 import { ReelsVideoInfo } from './ReelsVideoInfo';
+import PriceInfo from '@/components/product/PriceInfo';
+import SellerInfoOverlay from '@/components/product/SellerInfoOverlay';
+import ProductDetails from '@/components/product/ProductDetails';
 
 interface ReelsVideoPlayerProps {
   video: Video;
@@ -13,6 +15,21 @@ interface ReelsVideoPlayerProps {
   onVideoClick: (index: number, event?: React.MouseEvent) => void;
   formatViews: (views: number) => string;
   isModalMode?: boolean;
+  seller?: {
+    id: string;
+    name: string;
+    image_url?: string;
+    verified: boolean;
+    followers_count: number;
+  };
+  product?: {
+    id: string;
+    name: string;
+    price: number;
+    discount_price?: number | null;
+  };
+  onSellerClick?: () => void;
+  onProductDetailsClick?: () => void;
 }
 
 export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
@@ -24,6 +41,10 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
   onVideoClick,
   formatViews,
   isModalMode = false,
+  seller,
+  product,
+  onSellerClick,
+  onProductDetailsClick,
 }) => {
   return (
     <div 
@@ -44,10 +65,6 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
         />
       </div>
 
-      <ReelsPlayPauseOverlay
-        isPlaying={isPlaying}
-        onVideoClick={(e) => onVideoClick(index, e)}
-      />
 
       <div className="absolute inset-0 pointer-events-none flex flex-col justify-end">
         <div className="absolute bottom-0 left-0 right-0 h-3/5 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
@@ -67,6 +84,24 @@ export const ReelsVideoPlayer: React.FC<ReelsVideoPlayerProps> = ({
         />
 
         <ReelsVideoInfo video={video} />
+
+        {/* Price Info - Bottom Left (Above Seller) */}
+        <PriceInfo
+          product={product}
+          focusMode={false}
+          isPlaying={isPlaying}
+        />
+
+        {/* Seller Info - Bottom Left (Below Price) */}
+        <SellerInfoOverlay 
+          seller={seller}
+          onSellerClick={onSellerClick}
+          focusMode={false}
+          isPlaying={isPlaying}
+        />
+
+        {/* Product Details - Bottom Right */}
+        <ProductDetails onProductDetailsClick={onProductDetailsClick} />
       </div>
     </div>
   );
